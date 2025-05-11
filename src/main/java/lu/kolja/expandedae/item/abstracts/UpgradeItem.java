@@ -1,6 +1,7 @@
 package lu.kolja.expandedae.item.abstracts;
 
 import appeng.blockentity.AEBaseBlockEntity;
+import com.glodblock.github.extendedae.util.FCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
@@ -14,12 +15,12 @@ public abstract class UpgradeItem extends Item {
     }
 
     protected void replaceTile(Level world, BlockPos pos, BlockEntity oldTile, BlockEntity newTile, BlockState newBlock) {
-        CompoundTag contents = oldTile.serializeNBT();
+        CompoundTag contents = oldTile.saveWithFullMetadata(world.registryAccess());
         world.removeBlockEntity(pos);
         world.removeBlock(pos, false);
         world.setBlock(pos, newBlock, 3);
         world.setBlockEntity(newTile);
-        newTile.deserializeNBT(contents);
+        newTile.loadWithComponents(contents, world.registryAccess());
         if (newTile instanceof AEBaseBlockEntity aeTile) {
             aeTile.markForUpdate();
         } else {

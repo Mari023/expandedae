@@ -4,6 +4,8 @@ import appeng.blockentity.crafting.PatternProviderBlockEntity;
 import appeng.blockentity.networking.CableBusBlockEntity;
 import appeng.parts.AEBasePart;
 import appeng.parts.crafting.PatternProviderPart;
+import com.glodblock.github.extendedae.util.FCUtil;
+import com.glodblock.github.glodium.util.GlodUtil;
 import lu.kolja.expandedae.definition.ExpBlockEntities;
 import lu.kolja.expandedae.definition.ExpBlocks;
 import lu.kolja.expandedae.definition.ExpItems;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ExpPatternProviderUpgradeItem extends UpgradeItem {
@@ -31,11 +34,11 @@ public class ExpPatternProviderUpgradeItem extends UpgradeItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag advancedTooltips) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("item.expandedae.upgrade.tooltip",
                         "a Pattern Provider\n to an Expanded Pattern Provider")
                 .withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(stack, level, tooltip, advancedTooltips);
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class ExpPatternProviderUpgradeItem extends UpgradeItem {
                     }
                 }
 
-                BlockEntityType<?> tileType = ExpBlockEntities.EXP_PATTERN_PROVIDER;
+                BlockEntityType<?> tileType = ExpBlockEntities.EXP_PATTERN_PROVIDER.get();
                 BlockEntity te = tileType.create(pos, state);
                 replaceTile(world, pos, entity, te, state);
                 context.getItemInHand().shrink(1);
@@ -83,10 +86,10 @@ public class ExpPatternProviderUpgradeItem extends UpgradeItem {
 
                     var partItem = ExpItems.EXP_PATTERN_PROVIDER_PART.asItem();
 
-                    part.writeToNBT(contents);
+                    part.writeToNBT(contents, world.registryAccess());
                     var p = cable.replacePart(partItem, side, context.getPlayer(), null);
                     if (p != null) {
-                        p.readFromNBT(contents);
+                        p.readFromNBT(contents, world.registryAccess());
                     }
                 } else {
                     return InteractionResult.PASS;

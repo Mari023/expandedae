@@ -3,8 +3,8 @@ package lu.kolja.expandedae.definition;
 import appeng.api.upgrades.Upgrades;
 import appeng.core.definitions.AEBlocks;
 import appeng.core.definitions.AEParts;
-import de.mari_023.ae2wtlib.AE2wtlib;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import de.mari_023.ae2wtlib.AE2wtlibItems;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import static lu.kolja.expandedae.definition.ExpItems.*;
 
@@ -26,9 +26,9 @@ public class ExpUpgrades {
             Upgrades.add(ADVANCED_BLOCKING_CARD, AEParts.INTERFACE, 1, "group.interface.name");
 
             Upgrades.add(STICKY_CARD, AEParts.STORAGE_BUS, 1, "group.storage_bus.name");
-            
-            Upgrades.add(PATTERN_REFILLER_CARD, AE2wtlib.PATTERN_ENCODING_TERMINAL, 1, "group.pattern_encoding_terminal.name");
-            Upgrades.add(PATTERN_REFILLER_CARD, AE2wtlib.UNIVERSAL_TERMINAL, 1, "group.universal_terminal.name");
+
+            Upgrades.add(PATTERN_REFILLER_CARD, AE2wtlibItems.PATTERN_ENCODING_TERMINAL, 1, "group.pattern_encoding_terminal.name");
+            Upgrades.add(PATTERN_REFILLER_CARD, AE2wtlibItems.UNIVERSAL_TERMINAL, 1, "group.universal_terminal.name");
         });
     }
 }

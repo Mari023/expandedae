@@ -2,7 +2,7 @@ package lu.kolja.expandedae.item.misc;
 
 import appeng.blockentity.networking.CableBusBlockEntity;
 import appeng.parts.AEBasePart;
-import com.glodblock.github.extendedae.common.EPPItemAndBlock;
+import com.glodblock.github.extendedae.common.EAESingletons;
 import com.glodblock.github.extendedae.common.parts.PartExPatternProvider;
 import com.glodblock.github.extendedae.common.tileentities.TileExPatternProvider;
 import lu.kolja.expandedae.item.abstracts.UpgradeItem;
@@ -29,11 +29,11 @@ public class ExtPatternProviderUpgradeItem extends UpgradeItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag advancedTooltips) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("item.expandedae.upgrade.tooltip",
-                "an Extended Pattern Provider\n to an Expanded Pattern Provider")
+                        "an Extended Pattern Provider\n to an Expanded Pattern Provider")
                 .withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(stack, level, tooltip, advancedTooltips);
+        super.appendHoverText(stack, context, tooltip, tooltipFlag);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExtPatternProviderUpgradeItem extends UpgradeItem {
             if (tClazz == TileExPatternProvider.class) {
 
                 var originState = world.getBlockState(pos);
-                var state = EPPItemAndBlock.EX_PATTERN_PROVIDER.getStateForPlacement(ctx);
+                var state = EAESingletons.EX_PATTERN_PROVIDER.getStateForPlacement(ctx);
                 //var state = ExpBlocks.EXP_PATTERN_PROVIDER.block().getStateForPlacement(ctx);
                 if (state == null) {
                     return InteractionResult.PASS;
@@ -64,7 +64,7 @@ public class ExtPatternProviderUpgradeItem extends UpgradeItem {
                     }
                 }
 
-                BlockEntityType<?> tileType = EPPItemAndBlock.EX_PATTERN_PROVIDER.getBlockEntityType();
+                BlockEntityType<?> tileType = EAESingletons.EX_PATTERN_PROVIDER.getBlockEntityType();
                 BlockEntity te = tileType.create(pos, state);
                 replaceTile(world, pos, entity, te, state);
                 context.getItemInHand().shrink(1);
@@ -78,12 +78,12 @@ public class ExtPatternProviderUpgradeItem extends UpgradeItem {
                         && (part.getClass() == PartExPatternProvider.class)) {
                     var side = basePart.getSide();
                     var contents = new CompoundTag();
-                    var partItem = EPPItemAndBlock.EX_PATTERN_PROVIDER_PART;
+                    var partItem = EAESingletons.EX_PATTERN_PROVIDER_PART;
 
-                    part.writeToNBT(contents);
+                    part.writeToNBT(contents, world.registryAccess());
                     var p = cable.replacePart(partItem, side, context.getPlayer(), null);
                     if (p != null) {
-                        p.readFromNBT(contents);
+                        p.readFromNBT(contents, world.registryAccess());
                     }
                 } else {
                     return InteractionResult.PASS;

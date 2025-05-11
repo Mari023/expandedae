@@ -32,6 +32,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -127,16 +128,16 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
             method = "writeToNBT",
             at = @At("TAIL")
     )
-    private void eae_$saveUpgrade(CompoundTag tag, CallbackInfo ci) {
-        this.eae_$upgrades.writeToNBT(tag, "upgrades");
+    private void eae_$saveUpgrade(CompoundTag tag, HolderLookup.Provider registries, CallbackInfo ci) {
+        this.eae_$upgrades.writeToNBT(tag, "upgrades", registries);
     }
 
     @Inject(
             method = "readFromNBT",
             at = @At("TAIL")
     )
-    private void eae_$loadUpgrade(CompoundTag tag, CallbackInfo ci) {
-        this.eae_$upgrades.readFromNBT(tag, "upgrades");
+    private void eae_$loadUpgrade(CompoundTag tag, HolderLookup.Provider registries, CallbackInfo ci) {
+        this.eae_$upgrades.readFromNBT(tag, "upgrades", registries);
     }
 
     @Inject(
@@ -243,7 +244,7 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
                     BlockPos adjPos = be.getBlockPos().relative(direction);
                     BlockEntity adjBe = level.getBlockEntity(adjPos);
                     Direction adjBeSide = direction.getOpposite();
-                    ICraftingMachine craftingMachine = ICraftingMachine.of(level, adjPos, adjBeSide, adjBe);
+                    ICraftingMachine craftingMachine = ICraftingMachine.of(level, adjPos, adjBeSide);
                     if (craftingMachine != null && craftingMachine.acceptsPlans()) {
                         if (craftingMachine.pushPattern(patternDetails, inputHolder, adjBeSide)) {
                             this.onPushPatternSuccess(patternDetails);
@@ -333,7 +334,7 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
         int var4 = inputHolder.length;
         for (int var5 = 0; var5 < var4; ++var5) {
             for (Object2LongMap.Entry<AEKey> input : inputHolder[var5]) {
-                long inserted = target.insert((AEKey)input.getKey(), input.getLongValue(), Actionable.SIMULATE);
+                long inserted = target.insert(input.getKey(), input.getLongValue(), Actionable.SIMULATE);
                 if (inserted == 0L) {
                     return false;
                 }

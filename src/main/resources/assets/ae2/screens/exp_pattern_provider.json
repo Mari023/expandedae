@@ -5,7 +5,7 @@
     "texture": "guis/exp_pattern_provider.png",
     "textureWidth": 512,
     "textureHeight": 512,
-    "srcRect": [0, 0, 176, 315]
+    "srcRect": [0, 0, 176, 317]
   },
   "slots": {
     "ENCODED_PATTERN": {

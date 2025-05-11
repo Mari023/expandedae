@@ -15,8 +15,8 @@ public class ItemPatternRefillerCard extends UpgradeCardItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag advancedTooltips) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag advancedTooltips) {
         tooltip.add(Component.translatable("item.expandedae.pattern_refiller_card.tooltip.1").withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(stack, level, tooltip, advancedTooltips);
+        super.appendHoverText(stack, context, tooltip, advancedTooltips);
     }
 }

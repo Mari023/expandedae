@@ -8,7 +8,7 @@ import appeng.blockentity.crafting.PatternProviderBlockEntity;
 import appeng.helpers.patternprovider.PatternProviderLogic;
 import appeng.menu.ISubMenu;
 import appeng.menu.MenuOpener;
-import appeng.menu.locator.MenuLocator;
+import appeng.menu.locator.MenuHostLocator;
 import lu.kolja.expandedae.block.ExpPatternProviderBlock;
 import lu.kolja.expandedae.definition.ExpBlocks;
 import lu.kolja.expandedae.definition.ExpMenus;
@@ -33,13 +33,13 @@ public class ExpPatternProviderBlockEntity extends PatternProviderBlockEntity im
     }
 
     @Override
-    public void openMenu(Player player, MenuLocator locator) {
-        MenuOpener.open(ExpMenus.EXP_PATTERN_PROVIDER, player, locator);
+    public void openMenu(Player player, MenuHostLocator locator) {
+        MenuOpener.open(ExpMenus.EXP_PATTERN_PROVIDER.get(), player, locator);
     }
 
     @Override
     public void returnToMainMenu(Player player, ISubMenu subMenu) {
-        MenuOpener.returnTo(ExpMenus.EXP_PATTERN_PROVIDER, player, subMenu.getLocator());
+        MenuOpener.returnTo(ExpMenus.EXP_PATTERN_PROVIDER.get(), player, subMenu.getLocator());
     }
 
     @Override
@@ -51,4 +51,5 @@ public class ExpPatternProviderBlockEntity extends PatternProviderBlockEntity im
     public ItemStack getMainMenuIcon() {
         return ExpBlocks.EXP_PATTERN_PROVIDER.stack();
     }
+
 }

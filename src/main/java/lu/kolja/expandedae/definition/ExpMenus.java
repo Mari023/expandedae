@@ -1,19 +1,24 @@
 package lu.kolja.expandedae.definition;
 
-import appeng.core.AppEng;
 import appeng.helpers.patternprovider.PatternProviderLogicHost;
 import appeng.menu.AEBaseMenu;
 import appeng.menu.implementations.MenuTypeBuilder;
+import gripe._90.megacells.MEGACells;
+import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.menu.ExpPatternProviderMenu;
-import lu.kolja.expandedae.menu.FilterTermMenu;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ExpMenus {
+    public static final DeferredRegister<MenuType<?>> DR =
+            DeferredRegister.create(Registries.MENU, Expandedae.MODID);
 
     private static final Map<ResourceLocation, MenuType<?>> MENU_TYPES = new HashMap<>();
 
@@ -21,18 +26,19 @@ public class ExpMenus {
         return Collections.unmodifiableMap(MENU_TYPES);
     }
 
-    public static final MenuType<ExpPatternProviderMenu> EXP_PATTERN_PROVIDER = create(
+    public static final Supplier<MenuType<ExpPatternProviderMenu>> EXP_PATTERN_PROVIDER = create(
             "exp_pattern_provider",
             ExpPatternProviderMenu::new,
             PatternProviderLogicHost.class
     );
 
-    public static final MenuType<FilterTermMenu> FILTER_TERMINAL = FilterTermMenu.TYPE;
+    private static <M extends AEBaseMenu, H> Supplier<MenuType<M>> create(
+            String id, MenuTypeBuilder.MenuFactory<M, H> factory, Class<H> host) {
+        return DR.register(id, () -> MenuTypeBuilder.create(factory, host).buildUnregistered(MEGACells.makeId(id)));
+    }
 
-    public static <C extends AEBaseMenu, I> MenuType<C> create(
-            String id, MenuTypeBuilder.MenuFactory<C, I> factory, Class<I> host) {
-        var menu = MenuTypeBuilder.create(factory, host).build(id);
-        MENU_TYPES.put(AppEng.makeId(id), menu);
-        return menu;
+    private static <M extends AEBaseMenu, H> Supplier<MenuType<M>> createTyped(
+            String id, MenuTypeBuilder.TypedMenuFactory<M, H> factory, Class<H> host) {
+        return DR.register(id, () -> MenuTypeBuilder.create(factory, host).buildUnregistered(MEGACells.makeId(id)));
     }
 }

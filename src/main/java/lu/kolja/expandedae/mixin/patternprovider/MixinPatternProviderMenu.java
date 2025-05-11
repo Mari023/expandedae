@@ -29,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Mixin(value = PatternProviderMenu.class, remap = false)
 public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUpgradableMenu, IPatternProvider {
@@ -69,16 +70,16 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
             var stack = slot.getItem();
             var detail = PatternDetailsHelper.decodePattern(stack, this.getPlayer().level());
             if (detail instanceof AEProcessingPattern processingPattern) {
-                var input = Arrays.stream(processingPattern.getSparseInputs()).toArray(GenericStack[]::new);
-                var output = Arrays.stream(processingPattern.getOutputs()).toArray(GenericStack[]::new);
+                var input = processingPattern.getSparseInputs().toArray(GenericStack[]::new);
+                var output = processingPattern.getOutputs().toArray(GenericStack[]::new);
                 if (expandedae$checkModify(input, expandedae$getScale(), rightClick) && expandedae$checkModify(output, expandedae$getScale(), rightClick)) {
                     var mulInput = new GenericStack[input.length];
                     var mulOutput = new GenericStack[output.length];
                     expandedae$modifyStacks(input, mulInput, expandedae$getScale(), rightClick);
                     expandedae$modifyStacks(output, mulOutput, expandedae$getScale(), rightClick);
                     var newPattern = PatternDetailsHelper.encodeProcessingPattern(
-                            mulInput,
-                            mulOutput
+                            List.of(mulInput),
+                            List.of(mulOutput)
                     );
                     slot.set(newPattern);
                 }

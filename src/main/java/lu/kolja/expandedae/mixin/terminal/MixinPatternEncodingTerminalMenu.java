@@ -8,14 +8,15 @@ import appeng.api.storage.ITerminalHost;
 import appeng.api.upgrades.IUpgradeInventory;
 import appeng.api.upgrades.IUpgradeableItem;
 import appeng.core.definitions.AEItems;
-import appeng.helpers.IMenuCraftingPacket;
 import appeng.helpers.IPatternTerminalMenuHost;
 import appeng.menu.me.common.MEStorageMenu;
 import appeng.menu.me.items.PatternEncodingTermMenu;
 import appeng.menu.slot.RestrictedInputSlot;
 import appeng.util.ConfigInventory;
+import de.mari_023.ae2wtlib.AE2wtlibItems;
+import de.mari_023.ae2wtlib.api.registration.WTDefinition;
+import de.mari_023.ae2wtlib.api.terminal.WUTHandler;
 import de.mari_023.ae2wtlib.wet.WETScreen;
-import de.mari_023.ae2wtlib.wut.WUTHandler;
 import lu.kolja.expandedae.definition.ExpItems;
 import lu.kolja.expandedae.helper.IPatternEncodingTerminalMenu;
 import net.minecraft.client.Minecraft;
@@ -34,7 +35,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(value = PatternEncodingTermMenu.class, remap = false)
-public abstract class MixinPatternEncodingTerminalMenu extends MEStorageMenu implements IMenuCraftingPacket, IPatternEncodingTerminalMenu {
+public abstract class MixinPatternEncodingTerminalMenu extends MEStorageMenu implements IPatternEncodingTerminalMenu {
     @Final
     @Shadow
     @Mutable
@@ -58,7 +59,8 @@ public abstract class MixinPatternEncodingTerminalMenu extends MEStorageMenu imp
 
     @Inject(method = "encode", at = @At("RETURN"))
     private void encode(CallbackInfo ci) {
-        final IGridNode node = this.getNetworkNode();
+        System.out.println("ENCODING");
+        final IGridNode node = this.getGridNode();
         AtomicReference<Player> player = new AtomicReference<>();
         this.getActionSource().player().ifPresent(player::set);
         if (encodedPatternSlot.getItem() != ItemStack.EMPTY) {
@@ -96,9 +98,9 @@ public abstract class MixinPatternEncodingTerminalMenu extends MEStorageMenu imp
     @Unique
     @Nullable
     private ItemStack expandedae$getTerminalItem(Player player) {
-        var locator = WUTHandler.findTerminal(player, "pattern_encoding");
+        var locator = WUTHandler.findTerminal(player, WTDefinition.of(AE2wtlibItems.PATTERN_ENCODING_TERMINAL.getDefaultInstance()));
         if (locator == null) return null;
-        return WUTHandler.getItemStackFromLocator(player, locator);
+        return locator.locateItem(player);
     }
 
     @Inject(method = "<init>(Lnet/minecraft/world/inventory/MenuType;ILnet/minecraft/world/entity/player/Inventory;Lappeng/helpers/IPatternTerminalMenuHost;Z)V",

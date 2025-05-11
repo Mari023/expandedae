@@ -16,8 +16,8 @@ public class ItemSmartBlockingCard extends UpgradeCardItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag advancedTooltips) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag advancedTooltips) {
         tooltip.add(Component.translatable("item.expandedae.smart_blocking_card.tooltip").withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(stack, level, tooltip, advancedTooltips);
+        super.appendHoverText(stack, context, tooltip, advancedTooltips);
     }
 }

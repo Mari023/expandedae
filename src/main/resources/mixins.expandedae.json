@@ -1,15 +1,9 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "lu.kolja.expandedae.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "plugin": "lu.kolja.expandedae.mixin.MixinPlugin",
-  "refmap": "mixins.expandedae.refmap.json",
   "mixins": [
-    "compat.cosmic.MixinPatternEncodingTerminalMenuCosm",
-    "compat.cosmic.MixinPatternProviderLogicCosm",
-    "compat.cosmic.MixinPatternProviderMenuCosm",
-    "emi.MixinEmiScreenBase",
     "misc.MixinMathExpressionParser",
     "misc.MixinSettings",
     "misc.MixinSlot",
@@ -17,16 +11,12 @@
     "patternprovider.MixinPatternProviderLogic",
     "patternprovider.MixinPatternProviderLogicHost",
     "patternprovider.MixinPatternProviderMenu",
-    "storage.MixinCraftingCPUMenu",
-    "storage.MixinCraftingStatusTableRenderer",
     "terminal.MixinPatternEncodingTerminalMenu",
     "terminal.MixinProcessingEncodingPanel"
   ],
   "client": [
-    "compat.cosmic.MixinPatternProviderScreenCosm",
     "misc.MixinSettingToggleButton",
-    "patternprovider.MixinPatternProviderScreen",
-    "storage.MixinCraftingCPUScreen"
+    "patternprovider.MixinPatternProviderScreen"
   ],
   "injectors": {
     "defaultRequire": 1

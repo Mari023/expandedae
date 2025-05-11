@@ -7,7 +7,7 @@ import appeng.helpers.patternprovider.PatternProviderLogic;
 import appeng.items.parts.PartModels;
 import appeng.menu.ISubMenu;
 import appeng.menu.MenuOpener;
-import appeng.menu.locator.MenuLocator;
+import appeng.menu.locator.MenuLocators;
 import appeng.parts.PartModel;
 import appeng.parts.crafting.PatternProviderPart;
 import lu.kolja.expandedae.Expandedae;
@@ -17,16 +17,17 @@ import lu.kolja.expandedae.definition.ExpMenus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ExpPatternProviderPart extends PatternProviderPart {
     public static List<ResourceLocation> MODELS = Arrays.asList(
-            new ResourceLocation(Expandedae.MODID, "part/exp_pattern_provider_base"),
-            new ResourceLocation(AppEngBase.MOD_ID, "part/interface_on"),
-            new ResourceLocation(AppEngBase.MOD_ID, "part/interface_off"),
-            new ResourceLocation(AppEngBase.MOD_ID, "part/interface_has_channel")
+            Expandedae.makeId("part/exp_pattern_provider_base"),
+            ResourceLocation.fromNamespaceAndPath(AppEngBase.MOD_ID, "part/interface_on"),
+            ResourceLocation.fromNamespaceAndPath(AppEngBase.MOD_ID, "part/interface_off"),
+            ResourceLocation.fromNamespaceAndPath(AppEngBase.MOD_ID, "part/interface_has_channel")
     );
     @PartModels
     public static final PartModel MODELS_OFF = new PartModel(MODELS.get(0), MODELS.get(2));
@@ -45,13 +46,16 @@ public class ExpPatternProviderPart extends PatternProviderPart {
     }
 
     @Override
-    public void openMenu(Player player, MenuLocator locator) {
-        MenuOpener.open(ExpMenus.EXP_PATTERN_PROVIDER, player, locator);
+    public boolean onUseWithoutItem(Player p, Vec3 pos) {
+        if (!p.getCommandSenderWorld().isClientSide()) {
+            MenuOpener.open(ExpMenus.EXP_PATTERN_PROVIDER.get(), p, MenuLocators.forPart(this));
+        }
+        return true;
     }
 
     @Override
     public void returnToMainMenu(Player player, ISubMenu subMenu) {
-        MenuOpener.returnTo(ExpMenus.EXP_PATTERN_PROVIDER, player, subMenu.getLocator());
+        MenuOpener.returnTo(ExpMenus.EXP_PATTERN_PROVIDER.get(), player, subMenu.getLocator());
     }
 
     @Override

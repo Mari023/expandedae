@@ -16,9 +16,9 @@ public class ItemAutoCompleteCard extends UpgradeCardItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag advancedTooltips) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag advancedTooltips) {
         tooltip.add(Component.translatable("item.expandedae.auto_complete_card.tooltip.1").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("item.expandedae.auto_complete_card.tooltip.2").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));
-        super.appendHoverText(stack, level, tooltip, advancedTooltips);
+        super.appendHoverText(stack, context, tooltip, advancedTooltips);
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public class ExpPatternProviderBlock extends AEBaseEntityBlock<ExpPatternProviderBlockEntity> implements IUpgradeableObject {
     private static final EnumProperty<PushDirection> PUSH_DIRECTION = PatternProviderBlock.PUSH_DIRECTION;
@@ -55,41 +56,31 @@ public class ExpPatternProviderBlock extends AEBaseEntityBlock<ExpPatternProvide
     }
 
     @Override
-    public InteractionResult onActivated(
-            Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            @Nullable ItemStack heldItem,
-            BlockHitResult hit) {
-        if (InteractionUtil.isInAlternateUseMode(player)) {
-            return InteractionResult.PASS;
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (InteractionUtil.canWrenchRotate(heldItem)) {
+            this.setSide(level, pos, hit.getDirection());
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        } else {
+            return super.useItemOn(heldItem, state, level, pos, player, hand, hit);
         }
-
-        if (heldItem != null && InteractionUtil.canWrenchRotate(heldItem)) {
-            setSide(level, pos, hit.getDirection());
-            return InteractionResult.sidedSuccess(level.isClientSide());
-        }
-
-        var be = getBlockEntity(level, pos);
-
+    }
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        var be = this.getBlockEntity(level, pos);
         if (be != null) {
             if (!level.isClientSide()) {
                 be.openMenu(player, MenuLocators.forBlockEntity(be));
             }
-
             return InteractionResult.sidedSuccess(level.isClientSide());
+        } else {
+            return InteractionResult.PASS;
         }
-
-        return InteractionResult.PASS;
     }
 
     private void setSide(Level level, BlockPos pos, Direction facing) {
         var currentState = level.getBlockState(pos);
         var pushSide = currentState.getValue(PUSH_DIRECTION).getDirection();
-
         PushDirection newPushDirection;
-
         if (pushSide == facing.getOpposite()) {
             newPushDirection = PushDirection.fromDirection(facing);
         } else if (pushSide == facing) {
@@ -99,7 +90,6 @@ public class ExpPatternProviderBlock extends AEBaseEntityBlock<ExpPatternProvide
         } else {
             newPushDirection = PushDirection.fromDirection(Platform.rotateAround(pushSide, facing));
         }
-
         level.setBlockAndUpdate(pos, currentState.setValue(PUSH_DIRECTION, newPushDirection));
     }
 }
