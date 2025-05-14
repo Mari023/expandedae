@@ -5,29 +5,33 @@
       "left": 127,
       "bottom": 163
     },
+    "toggle_advanced": {
+      "left": 88,
+      "bottom": 159
+    },
     "mult2": {
-      "left": 127,
-      "bottom": 152
+      "left": 128,
+      "bottom": 154
     },
     "mult3": {
-      "left": 127,
-      "bottom": 141
+      "left": 128,
+      "bottom": 137
     },
     "mult8": {
-      "left": 127,
-      "bottom": 130
+      "left": 128,
+      "bottom": 120
     },
     "div2": {
-      "left": 100,
-      "bottom": 152
+      "left": 99,
+      "bottom": 154
     },
     "div3": {
-      "left": 100,
-      "bottom": 141
+      "left": 99,
+      "bottom": 137
     },
     "div8": {
-      "left": 100,
-      "bottom": 130
+      "left": 99,
+      "bottom": 120
     }
   }
 }

@@ -29,7 +29,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Mixin(value = PatternProviderMenu.class, remap = false)
 public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUpgradableMenu, IPatternProvider {
@@ -45,7 +44,7 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
 
     @Unique
     @GuiSync(8)
-    private BlockingMode eae$blockingMode = BlockingMode.DEFAULT;
+    public BlockingMode eae$blockingMode = BlockingMode.DEFAULT;
 
     public MixinPatternProviderMenu(MenuType<?> menuType, int id, Inventory playerInventory, Object host) {
         super(menuType, id, playerInventory, host);
@@ -78,14 +77,13 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
                     expandedae$modifyStacks(input, mulInput, expandedae$getScale(), rightClick);
                     expandedae$modifyStacks(output, mulOutput, expandedae$getScale(), rightClick);
                     var newPattern = PatternDetailsHelper.encodeProcessingPattern(
-                            List.of(mulInput),
-                            List.of(mulOutput)
+                            Arrays.stream(mulInput).toList(),
+                            Arrays.stream(mulOutput).toList()
                     );
                     slot.set(newPattern);
                 }
             }
         }
-
     }
     @Unique
     private int expandedae$getScale() {

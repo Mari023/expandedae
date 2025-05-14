@@ -5,7 +5,9 @@ import net.minecraft.ChatFormatting;
 
 public enum ExpText implements LocalizationEnum {
     modifyPatterns("Modify Patterns", Type.TOOLTIP),
-    modifyPatternsHint("Modify Patterns in this pattern provider.", Type.TOOLTIP);
+    modifyPatternsHint("Left click to multiply, right click to divide \nMultipliers: Shift 2x, Ctrl 8x", Type.TOOLTIP),
+    arrow("", Type.TOOLTIP),
+    arrowHint("", Type.TOOLTIP);
 
     private final String englishText;
     private final ExpText.Type type;

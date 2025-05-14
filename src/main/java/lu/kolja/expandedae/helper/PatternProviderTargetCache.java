@@ -70,6 +70,15 @@ public class PatternProviderTargetCache {
                 return false;
             }
 
+            @Override
+            public boolean onlyHasPatternInput(Set<AEKey> patternInputs) {
+                for (var stack : storage.getAvailableStacks()) {
+                    if (patternInputs.contains(stack.getKey().dropSecondary())) continue;
+                    return false;
+                }
+                return true;
+            }
+
             public MEStorage getStorage() {
                 return storage;
             }

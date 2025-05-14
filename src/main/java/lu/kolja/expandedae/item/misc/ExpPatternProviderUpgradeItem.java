@@ -4,8 +4,6 @@ import appeng.blockentity.crafting.PatternProviderBlockEntity;
 import appeng.blockentity.networking.CableBusBlockEntity;
 import appeng.parts.AEBasePart;
 import appeng.parts.crafting.PatternProviderPart;
-import com.glodblock.github.extendedae.util.FCUtil;
-import com.glodblock.github.glodium.util.GlodUtil;
 import lu.kolja.expandedae.definition.ExpBlockEntities;
 import lu.kolja.expandedae.definition.ExpBlocks;
 import lu.kolja.expandedae.definition.ExpItems;
@@ -18,14 +16,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ExpPatternProviderUpgradeItem extends UpgradeItem {

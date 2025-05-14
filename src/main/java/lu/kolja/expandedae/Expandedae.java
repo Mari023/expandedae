@@ -26,7 +26,6 @@ public class Expandedae {
         ExpBlockEntities.DR.register(modEventBus);
         ExpMenus.DR.register(modEventBus);
         ExpCreativeTab.DR.register(modEventBus);
-        System.out.println("CONSTRUCTORCALLED");
         modEventBus.addListener(this::commonSetup);
     }
 

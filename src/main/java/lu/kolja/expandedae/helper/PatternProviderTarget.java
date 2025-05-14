@@ -10,7 +10,6 @@ import appeng.api.storage.MEStorage;
 import appeng.me.storage.CompositeStorage;
 import appeng.parts.automation.StackWorldBehaviors;
 import com.google.common.util.concurrent.Runnables;
-import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -60,12 +59,21 @@ public interface PatternProviderTarget {
             }
 
             public boolean containsPatternInput(Set<AEKey> patternInputs) {
-                for(Object2LongMap.Entry<AEKey> stack : storage.getAvailableStacks()) {
+                for (var stack : storage.getAvailableStacks()) {
                     if (patternInputs.contains(stack.getKey().dropSecondary())) {
                         return true;
                     }
                 }
                 return false;
+            }
+
+            @Override
+            public boolean onlyHasPatternInput(Set<AEKey> patternInputs) {
+                for (var stack : storage.getAvailableStacks()) {
+                    if (patternInputs.contains(stack.getKey().dropSecondary())) continue;
+                    return false;
+                }
+                return true;
             }
 
             public MEStorage getStorage() {
@@ -77,6 +85,8 @@ public interface PatternProviderTarget {
     long insert(AEKey var1, long var2, Actionable var4);
 
     boolean containsPatternInput(Set<AEKey> var1);
+
+    boolean onlyHasPatternInput(Set<AEKey> var1);
 
     MEStorage getStorage();
 }

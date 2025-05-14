@@ -13,6 +13,7 @@ import appeng.api.stacks.KeyCounter;
 import appeng.api.upgrades.IUpgradeInventory;
 import appeng.api.upgrades.IUpgradeableObject;
 import appeng.api.upgrades.UpgradeInventories;
+import appeng.api.util.IConfigManager;
 import appeng.client.gui.me.common.FinishedJobToast;
 import appeng.client.gui.me.common.MEStorageScreen;
 import appeng.core.AEConfig;
@@ -69,9 +70,9 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
     @Shadow
     private IManagedGridNode mainNode;
 
-    @Shadow(remap = false)
+    @Shadow
     @Final
-    private ConfigManager configManager;
+    private IConfigManager configManager;
 
     @Shadow @Final private Set<AEKey> patternInputs;
 
@@ -102,6 +103,7 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
         /*
         if (!eae_$upgrades.isInstalled(ExpItems.SMART_BLOCKING_CARD)) { //TODO: smart card unlocks extra blocking modes
             assert Minecraft.getInstance().screen != null;
+            ((IPatternProvider) me)
             ((IBlockingMode) Minecraft.getInstance().screen).setVisible(false);
         } else {
             assert Minecraft.getInstance().screen != null;
@@ -183,8 +185,8 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
                         x.cancelJob();
                         var minecraft = Minecraft.getInstance();
                         if (AEConfig.instance().isNotifyForFinishedCraftingJobs()
-                            && !(minecraft.screen instanceof MEStorageScreen<?>)
-                            && minecraft.player != null && expandedae$hasNotificationEnablingItem(minecraft.player)) {
+                                && !(minecraft.screen instanceof MEStorageScreen<?>)
+                                && minecraft.player != null && expandedae$hasNotificationEnablingItem(minecraft.player)) {
                             minecraft.getToasts().addToast(new FinishedJobToast(what, 1)); //set to 1 since the card doesn't support more
                         }
                         return;
@@ -218,7 +220,7 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
             remap = false)
     private void PatternProviderLogic(IManagedGridNode mainNode, PatternProviderLogicHost host,
                                       int patternInventorySize, CallbackInfo ci) {
-        configManager.registerSetting(ExpSettings.BLOCKING_MODE, BlockingMode.DEFAULT);
+        ((ConfigManager) configManager).registerSetting(ExpSettings.BLOCKING_MODE, BlockingMode.DEFAULT);
     }
 
     @Override
@@ -281,20 +283,18 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
                                 }
                             }
                             case SMART -> {
-                                if ((!this.isBlocking() || adapter.getStorage().getAvailableStacks().isEmpty() || adapter.containsPatternInput(this.patternInputs)) && this.expandedae$adapterAcceptsAll(adapter, inputHolder)) {
-                                    if ((!this.isBlocking() || !adapter.containsPatternInput(this.patternInputs)) && this.expandedae$adapterAcceptsAll(adapter, inputHolder)) {
-                                        patternDetails.pushInputsToExternalInventory(inputHolder, (what, amount) -> {
-                                            long inserted = adapter.insert(what, amount, Actionable.MODULATE);
-                                            if (inserted < amount) {
-                                                this.addToSendList(what, amount - inserted);
-                                            }
-                                        });
-                                        this.onPushPatternSuccess(patternDetails);
-                                        this.sendDirection = direction;
-                                        this.sendStacksOut();
-                                        ++this.roundRobinIndex;
-                                        return true;
-                                    }
+                                if ((!this.isBlocking() || adapter.getStorage().getAvailableStacks().isEmpty() || adapter.onlyHasPatternInput(this.patternInputs)) && this.expandedae$adapterAcceptsAll(adapter, inputHolder)) {
+                                    patternDetails.pushInputsToExternalInventory(inputHolder, (what, amount) -> {
+                                        long inserted = adapter.insert(what, amount, Actionable.MODULATE);
+                                        if (inserted < amount) {
+                                            this.addToSendList(what, amount - inserted);
+                                        }
+                                    });
+                                    this.onPushPatternSuccess(patternDetails);
+                                    this.sendDirection = direction;
+                                    this.sendStacksOut();
+                                    ++this.roundRobinIndex;
+                                    return true;
                                 }
                             }
                             case DEFAULT -> {

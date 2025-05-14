@@ -1,7 +1,6 @@
 package lu.kolja.expandedae.item.abstracts;
 
 import appeng.blockentity.AEBaseBlockEntity;
-import com.glodblock.github.extendedae.util.FCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;

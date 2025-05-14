@@ -1,6 +1,5 @@
 package lu.kolja.expandedae.definition;
 
-import appeng.api.ids.AECreativeTabIds;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartItem;
 import appeng.api.parts.PartModels;
@@ -14,9 +13,6 @@ import lu.kolja.expandedae.item.misc.ExtPatternProviderUpgradeItem;
 import lu.kolja.expandedae.item.part.ExpPatternProviderPartItem;
 import lu.kolja.expandedae.part.ExpPatternProviderPart;
 import net.minecraft.Util;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

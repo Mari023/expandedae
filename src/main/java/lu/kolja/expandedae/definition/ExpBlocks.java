@@ -2,7 +2,6 @@ package lu.kolja.expandedae.definition;
 
 import appeng.core.definitions.BlockDefinition;
 import appeng.core.definitions.ItemDefinition;
-import gripe._90.megacells.definition.MEGAItems;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.block.ExpPatternProviderBlock;
 import lu.kolja.expandedae.block.ExpPatternProviderBlockItem;

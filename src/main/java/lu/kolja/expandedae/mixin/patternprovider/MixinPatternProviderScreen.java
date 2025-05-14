@@ -15,6 +15,7 @@ import lu.kolja.expandedae.client.gui.widgets.ExpActionItems;
 import lu.kolja.expandedae.definition.ExpSettings;
 import lu.kolja.expandedae.enums.BlockingMode;
 import lu.kolja.expandedae.helper.IPatternProvider;
+import lu.kolja.expandedae.helper.ISmartBlocking;
 import lu.kolja.expandedae.helper.IUpgradableMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(value = PatternProviderScreen.class, remap = false)
-public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> extends AEBaseScreen<C> {
+public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> extends AEBaseScreen<C> implements ISmartBlocking {
 
     @Unique
     private ServerSettingToggleButton<BlockingMode> eae$blockingMode;
@@ -47,7 +48,7 @@ public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> 
         this.widgets.add("upgrades", new UpgradesPanel(
                 menu.getSlots(SlotSemantics.UPGRADE),
                 this::eae_$getCompatibleUpgrades));
-        ExpActionButton modifyPatterns = new ExpActionButton(ExpActionItems.MODIFY_PATTERNS, act -> ((IPatternProvider) menu).expandedae$modifyPatterns(
+        ExpActionButton modifyPatterns = new ExpActionButton(ExpActionItems.MODIFY_PATTERNS, 16, 16,act -> ((IPatternProvider) menu).expandedae$modifyPatterns(
                 ((AEBaseScreen<?>) Minecraft.getInstance().screen).isHandlingRightClick()
         ));
         this.addToLeftToolbar(modifyPatterns);
@@ -63,6 +64,7 @@ public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> 
 
     @Unique
     private List<Component> eae_$getCompatibleUpgrades() {
+        ((IPatternProvider) menu).expandedae$hideBlocking();
         var list = new ArrayList<Component>();
         list.add(GuiText.CompatibleUpgrades.text());
         list.addAll(Upgrades.getTooltipLinesForMachine(((IUpgradableMenu) menu).getUpgrades().getUpgradableItem()));
@@ -72,5 +74,30 @@ public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> 
     @Inject(method = "updateBeforeRender", at = @At("TAIL"), remap = false)
     private void updateBeforeRender(CallbackInfo ci) {
         this.eae$blockingMode.set(((IPatternProvider) menu).expandedae$getBlockingMode());
+    }
+
+    @Override
+    public void expandedae$resetBlocking() {
+        this.eae$blockingMode.set(BlockingMode.DEFAULT);
+    }
+
+    @Override
+    public BlockingMode expandedae$getBlockingMode() {
+        return eae$blockingMode.getCurrentValue();
+    }
+
+    @Override
+    public void expandedae$setBlocking(BlockingMode blockingMode) {
+        eae$blockingMode.set(blockingMode);
+    }
+
+    @Override
+    public void expandedae$hideBlocking() {
+        eae$blockingMode.setVisibility(false);
+    }
+
+    @Override
+    public void expandedae$showBlocking() {
+        eae$blockingMode.setVisibility(true);
     }
 }

@@ -1,11 +1,11 @@
 package lu.kolja.expandedae.client.gui.widgets;
 
 import appeng.client.gui.Icon;
+import appeng.client.gui.style.Blitter;
 import appeng.client.gui.widgets.ITooltip;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,60 +14,58 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class ExpIconButton extends Button implements ITooltip {
+public class ModifyIconButton extends Button implements ITooltip {
+    private final ExpIcon icon;
+    private final Component displayName;
+    private final Component displayValue;
     private boolean halfSize = false;
-
     private boolean disableClickSound = false;
-
     private boolean disableBackground = false;
 
-    public ExpIconButton(OnPress onPress, int width, int height) {
-        super(0, 0, width, height, Component.empty(), onPress, Button.DEFAULT_NARRATION);
+    public ModifyIconButton(Button.OnPress onPress, ExpIcon icon, Component displayName, Component displayValue) {
+        super(0, 0, 8, 8, Component.empty(), onPress, DEFAULT_NARRATION);
+        this.icon = icon;
+        this.displayName = displayName;
+        this.displayValue = displayValue;
     }
 
     public void setVisibility(boolean vis) {
-        this.visible = vis;
-        this.active = vis;
-    }
-
-    @Override
-    public void playDownSound(SoundManager soundHandler) {
-        if (!disableClickSound) {
-            super.playDownSound(soundHandler);
-        }
+        visible = vis;
+        active = vis;
     }
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partial) {
-
         if (this.visible) {
-            var icon = this.getIcon();
             var item = this.getItemOverlay();
+
+            if (this.halfSize) {
+                this.width = 8;
+                this.height = 8;
+            }
 
             var yOffset = isHovered() ? 1 : 0;
 
             if (this.halfSize) {
                 if (!disableBackground) {
-                    var bgIcon = isHovered() ? ExpIcon.CUSTOM_TOOLBAR_BUTTON_BACKGROUND_HOVER
-                            : isFocused() ? ExpIcon.CUSTOM_TOOLBAR_BUTTON_BACKGROUND_FOCUS : ExpIcon.CUSTOM_TOOLBAR_BUTTON_BACKGROUND;
-
-                    bgIcon.getBlitter()
-                            .dest(getX() - 1, getY() + yOffset, 10, 10)
-                            .zOffset(2)
-                            .blit(guiGraphics);
+                    Icon.TOOLBAR_BUTTON_BACKGROUND.getBlitter().dest(getX(), getY()).zOffset(10).blit(guiGraphics);
                 }
                 if (item != null) {
-                    guiGraphics.renderItem(new ItemStack(item), getX(), getY() + 1 + yOffset, 0, 3);
+                    guiGraphics.renderItem(new ItemStack(item), getX(), getY(), 0, 20);
                 } else if (icon != null) {
-                    icon.getBlitter().dest(getX(), getY() + 1 + yOffset).zOffset(3).blit(guiGraphics);
+                    Blitter blitter = icon.getBlitter();
+                    if (!this.active) {
+                        blitter.opacity(0.5f);
+                    }
+                    blitter.dest(getX(), getY()).zOffset(20).blit(guiGraphics);
                 }
             } else {
                 if (!disableBackground) {
-                    Icon bgIcon = isHovered() ? Icon.TOOLBAR_BUTTON_BACKGROUND_HOVER
-                            : isFocused() ? Icon.TOOLBAR_BUTTON_BACKGROUND_FOCUS : Icon.TOOLBAR_BUTTON_BACKGROUND;
+                    var bgIcon = isHovered() ? ExpIcon.HALF_TOOLBAR_BUTTON_BACKGROUND_HOVER
+                            : isFocused() ? ExpIcon.HALF_TOOLBAR_BUTTON_BACKGROUND_FOCUS : ExpIcon.HALF_TOOLBAR_BUTTON_BACKGROUND;
 
                     bgIcon.getBlitter()
-                            .dest(getX() - 1, getY() + yOffset, 18, 20)
+                            .dest(getX() - 1, getY() + yOffset, 9, 10)
                             .zOffset(2)
                             .blit(guiGraphics);
                 }
@@ -80,11 +78,6 @@ public abstract class ExpIconButton extends Button implements ITooltip {
         }
     }
 
-    protected abstract ExpIcon getIcon();
-
-    /**
-     * Prioritized over {@link #getIcon()} if not null.
-     */
     @Nullable
     protected Item getItemOverlay() {
         return null;
@@ -92,7 +85,7 @@ public abstract class ExpIconButton extends Button implements ITooltip {
 
     @Override
     public List<Component> getTooltipMessage() {
-        return Collections.singletonList(getMessage());
+        return Collections.singletonList(Component.empty().append(displayName).append("\n").append(displayValue));
     }
 
     @Override
@@ -100,8 +93,9 @@ public abstract class ExpIconButton extends Button implements ITooltip {
         return new Rect2i(
                 getX(),
                 getY(),
-                this.halfSize ? 8 : 16,
-                this.halfSize ? 8 : 16);
+                8,
+                8
+        );
     }
 
     @Override
