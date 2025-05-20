@@ -160,4 +160,5 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
     public BlockingMode expandedae$getBlockingMode() {
         return eae$blockingMode;
     }
+
 }

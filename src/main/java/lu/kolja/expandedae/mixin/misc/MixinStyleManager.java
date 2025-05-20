@@ -12,7 +12,7 @@ public class MixinStyleManager {
         if (path.contains("wireless_pattern_encoding_terminal.json")) {
             return "/screens/wtlib/modify_wireless_pattern_encoding_terminal.json";
         } else if (path.contains("pattern_encoding_terminal.json")) {
-            return "/screens/terminals/modify_pattern_encoding_terminal.json";
+            return "/screens/terminals/exp_encoding_terminal.json";
         }
         return path;
     }

@@ -3,7 +3,8 @@ This mod is community-driven, so suggest any ideas you might have and they might
 
 ~~Port to 1.21.1 coming very soon..~~ <br />
 ~~**No.**~~
-Okay maybe
+~~Okay maybe~~
+Out now, go get it!!
 
 ### At first this mod was made to only add a bigger pattern provider, now it has turned into a full on project to port all of those feature you miss from old ae2 and its addons. I'm always open to further suggestions.
 Currently porting features from:

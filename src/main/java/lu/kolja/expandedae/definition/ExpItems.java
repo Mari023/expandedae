@@ -10,8 +10,10 @@ import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.item.cards.*;
 import lu.kolja.expandedae.item.misc.ExpPatternProviderUpgradeItem;
 import lu.kolja.expandedae.item.misc.ExtPatternProviderUpgradeItem;
+import lu.kolja.expandedae.item.part.ExpEncodingTerminalPartItem;
 import lu.kolja.expandedae.item.part.ExpPatternProviderPartItem;
 import lu.kolja.expandedae.part.ExpPatternProviderPart;
+import lu.kolja.expandedae.terminal.ExpEncodingTerminalPart;
 import net.minecraft.Util;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -32,6 +34,10 @@ public class ExpItems {
     public static final ItemDefinition<ExpPatternProviderPartItem> EXP_PATTERN_PROVIDER_PART = Util.make(() -> {
         PartModels.registerModels(PartModelsHelper.createModels(ExpPatternProviderPart.class));
         return item("Expanded Pattern Provider", "exp_pattern_provider_part", ExpPatternProviderPartItem::new);
+    });
+    public static final ItemDefinition<ExpEncodingTerminalPartItem> EXP_ENCODING_TERMINAL = Util.make(() -> {
+        PartModels.registerModels(PartModelsHelper.createModels(ExpEncodingTerminalPart.class));
+        return item("Expanded Pattern Encoding Terminal", "exp_encoding_terminal", ExpEncodingTerminalPartItem::new);
     });
     /*
     public static final ItemDefinition<FilterTerminalPartItem> FILTER_TERMINAL_PART = Util.make(() -> {

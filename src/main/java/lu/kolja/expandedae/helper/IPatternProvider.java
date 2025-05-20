@@ -6,7 +6,7 @@ public interface IPatternProvider {
     void expandedae$modifyPatterns(boolean rightClick);
 
     /**
-     * Resets the blocking mode to its default state, in this case, default mod
+     * Resets the blocking mode to its default state, in this case, default mode
      */
     void expandedae$resetBlocking();
 

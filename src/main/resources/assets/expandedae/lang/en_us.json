@@ -11,7 +11,7 @@
   "item.expandedae.pattern_refiller_card": "Pattern Refiller Card",
   "item.expandedae.smart_blocking_card": "Smart Blocking Card",
   "item.expandedae.sticky_card": "Sticky Card",
-  "item.expandedae.filter_terminal": "Filter Terminal",
+  "item.expandedae.exp_encoding_terminal": "Expanded Pattern Encoding Terminal",
 
   "item.expandedae.advanced_blocking_card.tooltip.1": "Exposes the entire networks contents when placed in an interface",
   "item.expandedae.auto_complete_card.tooltip.1": "Automatically completes the crafting job",

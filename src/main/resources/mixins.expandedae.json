@@ -7,7 +7,6 @@
     "misc.MixinMathExpressionParser",
     "misc.MixinSettings",
     "misc.MixinSlot",
-    "misc.MixinStyleManager",
     "patternprovider.MixinPatternProviderLogic",
     "patternprovider.MixinPatternProviderLogicHost",
     "patternprovider.MixinPatternProviderMenu",

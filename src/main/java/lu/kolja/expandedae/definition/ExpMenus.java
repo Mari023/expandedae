@@ -1,11 +1,13 @@
 package lu.kolja.expandedae.definition;
 
+import appeng.helpers.IPatternTerminalMenuHost;
 import appeng.helpers.patternprovider.PatternProviderLogicHost;
 import appeng.menu.AEBaseMenu;
 import appeng.menu.implementations.MenuTypeBuilder;
 import gripe._90.megacells.MEGACells;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.menu.ExpPatternProviderMenu;
+import lu.kolja.expandedae.terminal.ExpEncodingTerminalMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
@@ -30,6 +32,12 @@ public class ExpMenus {
             "exp_pattern_provider",
             ExpPatternProviderMenu::new,
             PatternProviderLogicHost.class
+    );
+
+    public static final Supplier<MenuType<ExpEncodingTerminalMenu>> EXP_ENCODING_TERMINAL = create(
+            "exp_encoding_terminal",
+            ExpEncodingTerminalMenu::new,
+            IPatternTerminalMenuHost.class
     );
 
     private static <M extends AEBaseMenu, H> Supplier<MenuType<M>> create(
