@@ -1,5 +1,5 @@
 # Get it down below!
-<img src="http://cf.way2muchnoise.eu/1213351.svg" width="200"/>
+[<img src="http://cf.way2muchnoise.eu/1213351.svg" width="200"/>](https://www.curseforge.com/minecraft/mc-mods/expanded-ae)
 
 
 Expanded AE currently only adds a few new features.  
