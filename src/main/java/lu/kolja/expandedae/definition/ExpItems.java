@@ -9,7 +9,6 @@ import appeng.items.parts.PartItem;
 import appeng.items.parts.PartModelsHelper;
 import appeng.items.storage.BasicStorageCell;
 import appeng.items.storage.StorageTier;
-import com.buuz135.soulplied_energistics.applied.SoulAEKeyType;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.item.cards.*;
 import lu.kolja.expandedae.item.misc.ExpPatternProviderUpgradeItem;
@@ -40,27 +39,24 @@ public class ExpItems {
         PartModels.registerModels(PartModelsHelper.createModels(ExpPatternProviderPart.class));
         return item("Expanded Pattern Provider", "exp_pattern_provider_part", ExpPatternProviderPartItem::new);
     });
+
     public static final ItemDefinition<ExpEncodingTerminalPartItem> EXP_ENCODING_TERMINAL = Util.make(() -> {
         PartModels.registerModels(PartModelsHelper.createModels(ExpEncodingTerminalPart.class));
         return item("Expanded Pattern Encoding Terminal", "exp_encoding_terminal", ExpEncodingTerminalPartItem::new);
     });
+
     public static final ItemDefinition<ExpItemWET> EXP_WIRELESS_ENCODING_TERMINAL = item(
             "Expanded Pattern Encoding Terminal",
             "exp_wireless_encoding_terminal",
             ExpItemWET::new
     );
-    /*
-    public static final ItemDefinition<FilterTerminalPartItem> FILTER_TERMINAL_PART = Util.make(() -> {
-        PartModels.registerModels(PartModelsHelper.createModels(FilterTerminalPart.class));
-        return item("Filter Terminal", "filter_terminal", FilterTerminalPartItem::new);
-    });
-    */
 
     public static final ItemDefinition<ExpPatternProviderUpgradeItem> EXP_PATTERN_PROVIDER_UPGRADE = item(
             "Expanded Pattern Provider Upgrade",
             "exp_pattern_provider_upgrade",
             ExpPatternProviderUpgradeItem::new
     );
+
     public static final ItemDefinition<ExtPatternProviderUpgradeItem> EXT_PATTERN_PROVIDER_UPGRADE = item(
             "Extended Pattern Provider Upgrader",
             "ext_pattern_provider_upgrader",
@@ -72,21 +68,25 @@ public class ExpItems {
             "auto_complete_card",
             ItemAutoCompleteCard::new
     );
+
     public static final ItemDefinition<ItemAdvancedBlockingCard> ADVANCED_BLOCKING_CARD = item(
             "Advanced Blocking Card",
             "advanced_blocking_card",
             ItemAdvancedBlockingCard::new
     );
+
     public static final ItemDefinition<ItemSmartBlockingCard> SMART_BLOCKING_CARD = item(
             "Smart Blocking Card",
             "smart_blocking_card",
             ItemSmartBlockingCard::new
     );
+
     public static final ItemDefinition<ItemStickyCard> STICKY_CARD = item(
             "Sticky Card",
             "sticky_card",
             ItemStickyCard::new
     );
+
     public static final ItemDefinition<ItemPatternRefillerCard> PATTERN_REFILLER_CARD = item(
             "Pattern Refiller Card",
             "pattern_refiller_card",
@@ -110,32 +110,5 @@ public class ExpItems {
         return definition;
     }
 
-    private static ItemDefinition<BasicStorageCell> itemCell(StorageTier tier) {
-        var cell = item(
-                tier.namePrefix().toUpperCase() + " MEGA Item Storage Cell",
-                "item_storage_cell_" + tier.namePrefix(),
-                p -> new BasicStorageCell(
-                        p.stacksTo(1),
-                        tier.idleDrain(),
-                        tier.bytes() / 1024,
-                        tier.bytes() / 128,
-                        1,
-                        SoulAEKeyType.TYPE));
-        return cell;
-    }
-
-    private static ItemDefinition<StorageComponentItem> component(int mb) {
-        return item(
-                mb + "Storage Component",
-                "cell_component_" + mb + "m",
-                p -> new StorageComponentItem(p, mb * 1024));
-    }
-    private static StorageTier tier(int index, ItemDefinition<StorageComponentItem> component) {
-        int multiplier = (int) Math.pow(4, index - 1);
-        return new StorageTier(index, (multiplier / 1024) + "m", 1024 * multiplier, 0.5 * index, component::asItem);
-    }
-
-    public static void orderInit() {
-        //EXP_WIRELESS_ENCODING_TERMINAL = new ExpItemWET();
-    }
+    public static void orderInit() {}
 }
