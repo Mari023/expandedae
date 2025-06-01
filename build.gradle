@@ -136,6 +136,13 @@ dependencies {
     implementation "curse.maven:mega-cells-622112:6517566"
     implementation "curse.maven:cloth-config-348521:5729127"
 
+    runtimeOnly "curse.maven:soulplied-energistics-1143614:6083831"
+    runtimeOnly "curse.maven:industrial-foregoing-souls-904394:6235883"
+    runtimeOnly "curse.maven:titanium-287342:6443608"
+    runtimeOnly "curse.maven:industrial-foregoing-266515:6502376"
+    runtimeOnly "curse.maven:mekanism-268560:6486993"
+
+    runtimeOnly "curse.maven:enderdrives-1226739:6482292"
     //compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
     //runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 }

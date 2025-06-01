@@ -8,6 +8,8 @@ import gripe._90.megacells.MEGACells;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.menu.ExpPatternProviderMenu;
 import lu.kolja.expandedae.terminal.ExpEncodingTerminalMenu;
+import lu.kolja.expandedae.terminal.wtlib.ExpWETMenu;
+import lu.kolja.expandedae.terminal.wtlib.ExpWETMenuHost;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
@@ -38,6 +40,12 @@ public class ExpMenus {
             "exp_encoding_terminal",
             ExpEncodingTerminalMenu::new,
             IPatternTerminalMenuHost.class
+    );
+
+    public static final Supplier<MenuType<ExpWETMenu>> EXP_WIRELESS_ENCODING_TERMINAL = create(
+            "exp_wireless_encoding_terminal",
+            ExpWETMenu::new,
+            ExpWETMenuHost.class
     );
 
     private static <M extends AEBaseMenu, H> Supplier<MenuType<M>> create(

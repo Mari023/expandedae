@@ -1,7 +1,11 @@
 package lu.kolja.expandedae.terminal.wtlib;
 
-import java.util.function.BiConsumer;
-
+import appeng.api.implementations.blockentities.IViewCellStorage;
+import appeng.helpers.IPatternTerminalLogicHost;
+import appeng.helpers.IPatternTerminalMenuHost;
+import appeng.menu.ISubMenu;
+import appeng.menu.locator.ItemMenuHostLocator;
+import appeng.parts.encoding.PatternEncodingLogic;
 import de.mari_023.ae2wtlib.api.AE2wtlibComponents;
 import de.mari_023.ae2wtlib.api.terminal.ItemWT;
 import de.mari_023.ae2wtlib.api.terminal.WTMenuHost;
@@ -9,12 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-import appeng.api.implementations.blockentities.IViewCellStorage;
-import appeng.helpers.IPatternTerminalLogicHost;
-import appeng.helpers.IPatternTerminalMenuHost;
-import appeng.menu.ISubMenu;
-import appeng.menu.locator.ItemMenuHostLocator;
-import appeng.parts.encoding.PatternEncodingLogic;
+import java.util.function.BiConsumer;
 
 public class ExpWETMenuHost extends WTMenuHost
         implements IViewCellStorage, IPatternTerminalMenuHost, IPatternTerminalLogicHost {

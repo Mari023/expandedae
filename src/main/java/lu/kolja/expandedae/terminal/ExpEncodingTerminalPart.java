@@ -2,9 +2,6 @@ package lu.kolja.expandedae.terminal;
 
 import appeng.api.parts.IPartItem;
 import appeng.api.parts.IPartModel;
-import appeng.core.AppEng;
-import appeng.core.AppEngBase;
-import appeng.helpers.patternprovider.PatternProviderLogic;
 import appeng.items.parts.PartModels;
 import appeng.menu.ISubMenu;
 import appeng.menu.MenuOpener;

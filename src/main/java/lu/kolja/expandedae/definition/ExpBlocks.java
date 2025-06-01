@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class ExpBlocks {
     public static final DeferredRegister.Blocks DR = DeferredRegister.createBlocks(Expandedae.MODID);
 
-    private static final List<BlockDefinition<?>> BLOCKS = new ArrayList<>();
+    public static final List<BlockDefinition<?>> BLOCKS = new ArrayList<>();
     public static final BlockDefinition<ExpPatternProviderBlock> EXP_PATTERN_PROVIDER = block(
             "Expanded Pattern Provider",
             "exp_pattern_provider",

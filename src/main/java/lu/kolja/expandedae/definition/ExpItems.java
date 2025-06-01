@@ -4,8 +4,12 @@ import appeng.api.parts.IPart;
 import appeng.api.parts.IPartItem;
 import appeng.api.parts.PartModels;
 import appeng.core.definitions.ItemDefinition;
+import appeng.items.materials.StorageComponentItem;
 import appeng.items.parts.PartItem;
 import appeng.items.parts.PartModelsHelper;
+import appeng.items.storage.BasicStorageCell;
+import appeng.items.storage.StorageTier;
+import com.buuz135.soulplied_energistics.applied.SoulAEKeyType;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.item.cards.*;
 import lu.kolja.expandedae.item.misc.ExpPatternProviderUpgradeItem;
@@ -14,6 +18,7 @@ import lu.kolja.expandedae.item.part.ExpEncodingTerminalPartItem;
 import lu.kolja.expandedae.item.part.ExpPatternProviderPartItem;
 import lu.kolja.expandedae.part.ExpPatternProviderPart;
 import lu.kolja.expandedae.terminal.ExpEncodingTerminalPart;
+import lu.kolja.expandedae.terminal.wtlib.ExpItemWET;
 import net.minecraft.Util;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -39,6 +44,11 @@ public class ExpItems {
         PartModels.registerModels(PartModelsHelper.createModels(ExpEncodingTerminalPart.class));
         return item("Expanded Pattern Encoding Terminal", "exp_encoding_terminal", ExpEncodingTerminalPartItem::new);
     });
+    public static final ItemDefinition<ExpItemWET> EXP_WIRELESS_ENCODING_TERMINAL = item(
+            "Expanded Pattern Encoding Terminal",
+            "exp_wireless_encoding_terminal",
+            ExpItemWET::new
+    );
     /*
     public static final ItemDefinition<FilterTerminalPartItem> FILTER_TERMINAL_PART = Util.make(() -> {
         PartModels.registerModels(PartModelsHelper.createModels(FilterTerminalPart.class));
@@ -100,5 +110,32 @@ public class ExpItems {
         return definition;
     }
 
-    public static void orderInit() {}
+    private static ItemDefinition<BasicStorageCell> itemCell(StorageTier tier) {
+        var cell = item(
+                tier.namePrefix().toUpperCase() + " MEGA Item Storage Cell",
+                "item_storage_cell_" + tier.namePrefix(),
+                p -> new BasicStorageCell(
+                        p.stacksTo(1),
+                        tier.idleDrain(),
+                        tier.bytes() / 1024,
+                        tier.bytes() / 128,
+                        1,
+                        SoulAEKeyType.TYPE));
+        return cell;
+    }
+
+    private static ItemDefinition<StorageComponentItem> component(int mb) {
+        return item(
+                mb + "Storage Component",
+                "cell_component_" + mb + "m",
+                p -> new StorageComponentItem(p, mb * 1024));
+    }
+    private static StorageTier tier(int index, ItemDefinition<StorageComponentItem> component) {
+        int multiplier = (int) Math.pow(4, index - 1);
+        return new StorageTier(index, (multiplier / 1024) + "m", 1024 * multiplier, 0.5 * index, component::asItem);
+    }
+
+    public static void orderInit() {
+        //EXP_WIRELESS_ENCODING_TERMINAL = new ExpItemWET();
+    }
 }
