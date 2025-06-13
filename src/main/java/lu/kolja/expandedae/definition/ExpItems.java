@@ -4,11 +4,8 @@ import appeng.api.parts.IPart;
 import appeng.api.parts.IPartItem;
 import appeng.api.parts.PartModels;
 import appeng.core.definitions.ItemDefinition;
-import appeng.items.materials.StorageComponentItem;
 import appeng.items.parts.PartItem;
 import appeng.items.parts.PartModelsHelper;
-import appeng.items.storage.BasicStorageCell;
-import appeng.items.storage.StorageTier;
 import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.item.cards.*;
 import lu.kolja.expandedae.item.misc.ExpPatternProviderUpgradeItem;
@@ -17,9 +14,11 @@ import lu.kolja.expandedae.item.part.ExpEncodingTerminalPartItem;
 import lu.kolja.expandedae.item.part.ExpPatternProviderPartItem;
 import lu.kolja.expandedae.part.ExpPatternProviderPart;
 import lu.kolja.expandedae.terminal.ExpEncodingTerminalPart;
-import lu.kolja.expandedae.terminal.wtlib.ExpItemWET;
+import lu.kolja.expandedae.xmod.ae2wtlib.DummyTerminal;
+import lu.kolja.expandedae.xmod.ae2wtlib.WTLibIntegration;
 import net.minecraft.Util;
 import net.minecraft.world.item.Item;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
@@ -44,12 +43,6 @@ public class ExpItems {
         PartModels.registerModels(PartModelsHelper.createModels(ExpEncodingTerminalPart.class));
         return item("Expanded Pattern Encoding Terminal", "exp_encoding_terminal", ExpEncodingTerminalPartItem::new);
     });
-
-    public static final ItemDefinition<ExpItemWET> EXP_WIRELESS_ENCODING_TERMINAL = item(
-            "Expanded Pattern Encoding Terminal",
-            "exp_wireless_encoding_terminal",
-            ExpItemWET::new
-    );
 
     public static final ItemDefinition<ExpPatternProviderUpgradeItem> EXP_PATTERN_PROVIDER_UPGRADE = item(
             "Expanded Pattern Provider Upgrade",
@@ -81,6 +74,13 @@ public class ExpItems {
             ItemSmartBlockingCard::new
     );
 
+    public static final ItemDefinition<Item> WIRELESS_EXP_ENCODING_TERMINAL = item("Wireless Expanded Pattern Encoding Terminal", "wireless_exp_encoding_terminal", p -> {
+            return ModList.get().isLoaded("ae2wtlib")
+                    ? WTLibIntegration.TERMINAL
+                    : new DummyTerminal(new Item.Properties().stacksTo(1));
+        }
+    );
+
     public static final ItemDefinition<ItemStickyCard> STICKY_CARD = item(
             "Sticky Card",
             "sticky_card",
@@ -104,6 +104,13 @@ public class ExpItems {
     }
 
     private static <T extends Item> ItemDefinition<T> item(
+            String englishName, String id, Function<Item.Properties, T> factory) {
+        var definition = new ItemDefinition<>(englishName, DR.registerItem(id, factory));
+        ITEMS.add(definition);
+        return definition;
+    }
+
+    private static <T extends Item> ItemDefinition<T> altItem(
             String englishName, String id, Function<Item.Properties, T> factory) {
         var definition = new ItemDefinition<>(englishName, DR.registerItem(id, factory));
         ITEMS.add(definition);

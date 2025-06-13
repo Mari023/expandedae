@@ -35,7 +35,7 @@ public enum ExpIcon {
     public static final int TEXTURE_WIDTH = 256;
     public static final int TEXTURE_HEIGHT = 256;
     public static final ResourceLocation TEXTURE_RL = Expandedae.makeId("textures/gui/states.png");
-    public static final de.mari_023.ae2wtlib.api.gui.Icon.Texture TEXTURE = new Icon.Texture(TEXTURE_RL, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+    public static final Icon.Texture TEXTURE = new Icon.Texture(TEXTURE_RL, TEXTURE_WIDTH, TEXTURE_HEIGHT);
 
 
     ExpIcon(int x, int y) {

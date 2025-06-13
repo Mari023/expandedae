@@ -122,7 +122,7 @@ public abstract class MixinPatternProviderLogic implements IUpgradeableObject, I
             at = @At("TAIL")
     )
     private void eae_$initUpgrade(IManagedGridNode mainNode, PatternProviderLogicHost host, int patternInventorySize, CallbackInfo ci) {
-        eae_$upgrades = UpgradeInventories.forMachine(host.getTerminalIcon().getItem(), 2, this::eae_$onUpgradesChanged);
+        eae_$upgrades = UpgradeInventories.forMachine(host.getTerminalIcon().getItem(), 1, this::eae_$onUpgradesChanged);
         this.expandedae$targetCaches = new PatternProviderTargetCache[6];
     }
 

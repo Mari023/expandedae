@@ -24,7 +24,7 @@ public interface IPatternProvider {
     /**
      * Hides the extra blocking modes button
      */
-    void expandedae$hideBlocking();
+    //void expandedae$hideBlocking();
 
     /**
      * Shows the extra blocking modes button

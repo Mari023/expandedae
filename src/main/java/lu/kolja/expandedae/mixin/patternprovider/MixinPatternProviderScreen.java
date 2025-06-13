@@ -64,7 +64,7 @@ public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> 
 
     @Unique
     private List<Component> eae_$getCompatibleUpgrades() {
-        ((IPatternProvider) menu).expandedae$hideBlocking();
+        //((IPatternProvider) menu).expandedae$hideBlocking();
         var list = new ArrayList<Component>();
         list.add(GuiText.CompatibleUpgrades.text());
         list.addAll(Upgrades.getTooltipLinesForMachine(((IUpgradableMenu) menu).getUpgrades().getUpgradableItem()));
@@ -90,11 +90,12 @@ public abstract class MixinPatternProviderScreen<C extends PatternProviderMenu> 
     public void expandedae$setBlocking(BlockingMode blockingMode) {
         eae$blockingMode.set(blockingMode);
     }
-
+    /*
     @Override
     public void expandedae$hideBlocking() {
         eae$blockingMode.setVisibility(false);
     }
+    */
 
     @Override
     public void expandedae$showBlocking() {

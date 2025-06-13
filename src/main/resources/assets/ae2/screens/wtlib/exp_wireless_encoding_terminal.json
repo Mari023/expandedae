@@ -1,7 +1,0 @@
-{
-  "$schema": "../schema.json",
-  "includes": [
-    "exp_wireless_encoding_terminal_base.json",
-    "universal_terminal.json"
-  ]
-}

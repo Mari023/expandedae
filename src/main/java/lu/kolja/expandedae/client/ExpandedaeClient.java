@@ -7,9 +7,10 @@ import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.definition.ExpMenus;
 import lu.kolja.expandedae.menu.ExpPatternProviderMenu;
 import lu.kolja.expandedae.terminal.ExpEncodingTerminalMenu;
-import lu.kolja.expandedae.terminal.wtlib.ExpWETMenu;
+import lu.kolja.expandedae.terminal.wtlib.ExpWETScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
@@ -32,11 +33,8 @@ public class ExpandedaeClient {
                 PatternEncodingTermScreen<ExpEncodingTerminalMenu>::new,
                 "/screens/terminals/exp_encoding_terminal.json"
         );
-        InitScreens.register(
-                event,
-                ExpMenus.EXP_WIRELESS_ENCODING_TERMINAL.get(),
-                PatternEncodingTermScreen<ExpWETMenu>::new,
-                "/screens/wtlib/exp_wireless_encoding_terminal.json"
-        );
+        if (ModList.get().isLoaded("ae2wtlib")) {
+            ExpWETScreen.register(event);
+        }
     }
 }

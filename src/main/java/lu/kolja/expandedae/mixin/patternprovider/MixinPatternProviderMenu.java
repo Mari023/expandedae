@@ -39,6 +39,7 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
     @Shadow(remap = false)
     protected PatternProviderLogic logic;
 
+    @Shadow @Final public static MenuType<PatternProviderMenu> TYPE;
     @Unique
     private ToolboxMenu eae_$toolbox;
 
@@ -120,19 +121,17 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
             }
         }
     }
-    @SuppressWarnings("AddedMixinMembersNamePattern")
+
     @Override
     public ToolboxMenu getToolbox() {
         return this.eae_$toolbox;
     }
 
-    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public IUpgradeInventory getUpgrades() {
         return ((IUpgradeableObject) this.logic).getUpgrades();
     }
 
-    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public boolean hasUpgrade(ItemLike upgradeCard) {
         return getUpgrades().isInstalled(upgradeCard);
@@ -160,5 +159,4 @@ public abstract class MixinPatternProviderMenu extends AEBaseMenu implements IUp
     public BlockingMode expandedae$getBlockingMode() {
         return eae$blockingMode;
     }
-
 }

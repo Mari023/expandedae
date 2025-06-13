@@ -22,6 +22,8 @@ public class ExpUpgrades {
             Upgrades.add(SMART_BLOCKING_CARD, AEBlocks.PATTERN_PROVIDER, 1, "group.pattern_provider.name");
             Upgrades.add(SMART_BLOCKING_CARD, AEParts.PATTERN_PROVIDER, 1, "group.pattern_provider.name");
 
+            Upgrades.add(PATTERN_REFILLER_CARD, WIRELESS_EXP_ENCODING_TERMINAL, 1, "group.exp_wet.name");
+
             Upgrades.add(ADVANCED_BLOCKING_CARD, AEBlocks.INTERFACE, 1, "group.interface.name");
             Upgrades.add(ADVANCED_BLOCKING_CARD, AEParts.INTERFACE, 1, "group.interface.name");
 

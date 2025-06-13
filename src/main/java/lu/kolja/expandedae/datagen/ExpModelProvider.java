@@ -1,28 +1,34 @@
 package lu.kolja.expandedae.datagen;
 
-import lu.kolja.expandedae.definition.ExpItems;
-import net.minecraft.core.registries.BuiltInRegistries;
+import appeng.datagen.providers.models.AE2BlockStateProvider;
+import lu.kolja.expandedae.Expandedae;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
-public class ExpModelProvider extends ItemModelProvider {
-    public ExpModelProvider(PackOutput output, String modid, ExistingFileHelper existingFileHelper) {
-        super(output, modid, existingFileHelper);
+import static lu.kolja.expandedae.definition.ExpItems.*;
+
+public class ExpModelProvider extends AE2BlockStateProvider {
+    public ExpModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, Expandedae.MODID, existingFileHelper);
     }
 
     @Override
-    protected void registerModels() {
-        for (var item : ExpItems.getItems()) {
+    protected void registerStatesAndModels() {
+        basicItem(PATTERN_REFILLER_CARD);
+        basicItem(AUTO_COMPLETE_CARD);
+        basicItem(EXP_PATTERN_PROVIDER_UPGRADE);
+        basicItem(WIRELESS_EXP_ENCODING_TERMINAL);
+    }
 
-        }
+    private void basicItem(ItemLike item) {
+        itemModels().basicItem(item.asItem());
     }
-    /* TODO FIX
-    private ItemModelBuilder simpleItem(Item item) {
-        return withExistingParent(BuiltInRegistries.ITEM.getKey(item).getPath(), new ResourceLocation("", ""))
+
+    @NotNull
+    @Override
+    public String getName() {
+        return "Block States / Models";
     }
-    */
 }

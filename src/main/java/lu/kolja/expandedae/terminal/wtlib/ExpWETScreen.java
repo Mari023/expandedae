@@ -2,19 +2,22 @@ package lu.kolja.expandedae.terminal.wtlib;
 
 import appeng.client.gui.me.items.PatternEncodingTermScreen;
 import appeng.client.gui.style.ScreenStyle;
+import appeng.init.client.InitScreens;
 import de.mari_023.ae2wtlib.api.gui.ScrollingUpgradesPanel;
 import de.mari_023.ae2wtlib.api.terminal.IUniversalTerminalCapable;
 import de.mari_023.ae2wtlib.api.terminal.WTMenuHost;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class ExpWETScreen extends PatternEncodingTermScreen<ExpWETMenu> implements IUniversalTerminalCapable {
     private final ScrollingUpgradesPanel upgradesPanel;
 
-    public ExpWETScreen(ExpWETMenu container, Inventory playerInventory, Component title, ScreenStyle style) {
-        super(container, playerInventory, title, style);
-        if (getMenu().isWUT())
+    public ExpWETScreen(ExpWETMenu menu, Inventory playerInventory, Component title, ScreenStyle style) {
+        super(menu, playerInventory, title, style);
+        if (menu.isWUT())
             addToLeftToolbar(cycleTerminalButton());
+
         upgradesPanel = addUpgradePanel(widgets, getMenu());
     }
 
@@ -30,6 +33,15 @@ public class ExpWETScreen extends PatternEncodingTermScreen<ExpWETMenu> implemen
         if (!value)
             return checkForTerminalKeys(keyCode, scanCode);
         return true;
+    }
+
+    public static void register(RegisterMenuScreensEvent event) {
+        InitScreens.register(
+                event,
+                ExpWETMenu.TYPE,
+                PatternEncodingTermScreen<ExpWETMenu>::new,
+                "/screens/expandedae/wireless_exp_encoding_terminal.json"
+        );
     }
 
     @Override

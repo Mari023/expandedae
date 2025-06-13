@@ -6,17 +6,16 @@ import appeng.menu.slot.RestrictedInputSlot;
 import de.mari_023.ae2wtlib.api.gui.AE2wtlibSlotSemantics;
 import de.mari_023.ae2wtlib.api.terminal.ItemWUT;
 import de.mari_023.ae2wtlib.api.terminal.WTMenuHost;
+import lu.kolja.expandedae.Expandedae;
 import lu.kolja.expandedae.terminal.ExpEncodingTerminalMenu;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 
-import static de.mari_023.ae2wtlib.api.AE2wtlibAPI.id;
-
-
 public class ExpWETMenu extends ExpEncodingTerminalMenu {
-    public static final ResourceLocation ID = id("exp_wireless_encoding_terminal");
-    public static final MenuType<ExpWETMenu> TYPE = MenuTypeBuilder.create(ExpWETMenu::new, ExpWETMenuHost.class)
+    public static final ResourceLocation ID = Expandedae.makeId("wireless_exp_encoding_terminal");
+    public static final MenuType<ExpWETMenu> TYPE = MenuTypeBuilder
+            .create(ExpWETMenu::new, ExpWETMenuHost.class)
             .buildUnregistered(ID);
 
     private final ExpWETMenuHost wetMenuHost;

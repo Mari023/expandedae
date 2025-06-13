@@ -36,7 +36,7 @@ neoForge {
     runs {
         client {
             client()
-            jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+            //jvmArgument("-XX:+AllowEnhancedClassRedefinition")
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -122,10 +122,11 @@ dependencies {
     implementation "curse.maven:glodium-957920:5821676"
     implementation "curse.maven:guideme-1173950:6488254"
 
-    //runtimeOnly fg.deobf("curse.maven:modern-ae2-additions-1028068:6342203")
     jarJar(implementation "de.mari_023:ae2wtlib_api:$ae2wtlib_version")
     runtimeOnly "de.mari_023:ae2wtlib:$ae2wtlib_version"
     compileOnly "de.mari_023:ae2wtlib:$ae2wtlib_version"
+    runtimeOnly "curse.maven:appliede-1009940:6500056"
+    runtimeOnly "curse.maven:projecte-226410:6611984"
 
     //implementation "curse.maven:applied-energistics-2-wireless-terminals-459929:6437277"
     implementation "curse.maven:architectury-api-419699:5786327"
@@ -143,8 +144,9 @@ dependencies {
     runtimeOnly "curse.maven:mekanism-268560:6486993"
 
     runtimeOnly "curse.maven:enderdrives-1226739:6482292"
-    //compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
-    //runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
